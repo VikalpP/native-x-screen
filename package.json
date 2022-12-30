@@ -1,9 +1,9 @@
 {
-  "name": "native-x-screen",
+  "name": "@vikalp_p/native-x-screen",
   "version": "0.0.0-development",
   "description": "Screen wrapper component",
   "main": "lib/index.js",
-  "repository": "https://github.com/rintoj/native-x-screen.git",
+  "repository": "https://github.com/VikalpP/native-x-screen.git",
   "author": "Rinto Jose <rintoj@gmail.com>",
   "license": "MIT",
   "private": false,
