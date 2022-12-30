@@ -21,7 +21,11 @@ npm install native-x-screen
 ## Usage
 
 ```tsx
-import { Screen } from 'native-x-screen'
+import { Screen, SafeAreaProvider } from 'native-x-screen'
+
+function App() {
+  return <SafeAreaProvider>...</SafeAreaProvider>;
+}
 
 function HomeScreen() {
   const header = (

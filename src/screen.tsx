@@ -2,11 +2,8 @@ import { BackgroundColorStyleProps, COLOR, useContainerStyle } from 'native-x-th
 import React, { ReactNode, useEffect, useMemo, useRef } from 'react'
 import { Keyboard, Platform, ScrollView, TextInput, View } from 'react-native'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
-import { withSafeArea } from 'react-native-safe-area'
+import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 import { styles as s } from 'tachyons-react-native'
-
-const SafeAreaWithBottomPadding = withSafeArea(View, 'padding', 'bottom')
-const SafeAreaWithVerticalPadding = withSafeArea(View, 'padding', 'vertical')
 
 const { State: TextInputState } = TextInput
 const INPUT_OFFSET = 200
@@ -36,10 +33,12 @@ export function Screen({
   keepKeyboard,
 }: ScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null)
-  const SafeArea = useMemo(
-    () => (scrollable ? View : header ? SafeAreaWithBottomPadding : SafeAreaWithVerticalPadding),
-    [header, scrollable],
-  )
+  const safeAreaEdges: Edge[] = useMemo(() => {
+    if (scrollable) return []
+    if (header) return ['bottom', 'left', 'right']
+    return ['top', 'bottom', 'left', 'right']
+  }, [header, scrollable])
+
   const content = hasForm ? (
     <ScrollView
       ref={scrollViewRef}
@@ -82,7 +81,9 @@ export function Screen({
     <View style={containerStyle}>
       {header && <View style={styles.spacer} />}
       {header}
-      <SafeArea style={containerStyle}>{content}</SafeArea>
+      <SafeAreaView style={containerStyle} edges={safeAreaEdges}>
+        {content}
+      </SafeAreaView>
     </View>
   )
 }
